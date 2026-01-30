@@ -18,7 +18,7 @@ The application models a competition where a "Master Bunny" (parent process) coo
     Compile the source code using gcc:
     Bash
 
-    gcc -o bunny_sim main.c
+    gcc -o bunny_sim nyuszi.c
 
     Execute the binary:
     Bash
