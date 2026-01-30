@@ -1,6 +1,34 @@
+🐰 Easter Bunny OS Simulation – IPC & Process Management
 
-Itt a tavasz, a nyuszik is készülnek a "Húsvéti Locsolókirály" választásra. A nyuszi fiúk között versenyt szervez "Főnyuszi", az lesz a "Locsolókirály", aki a legszebb locsolóverset tudja elmondani. Pl.  "Piros tojás fehér nyuszi, locsolásért jár egy puszi!" A locsoló versike mellett tároljuk a nyuszi fiú nevét (pl Tapsi Füles) és a versikéért kapott tojások számát. Aki a locsolás során a legtöbb piros tojást gyűjti össze a nyuszi lányoktól az lesz a király. A versenyre jelentkezni kell.  A jelentkezéskor meg kell adni nyuszinak a nevét, a locsoló versikét. A tojások száma jelentkezéskor 0.  Az adatokat fájlban tároljuk.
+This project is a Linux-based system simulation written in C. It demonstrates low-level operating system concepts such as process synchronization, parent-child process forking, and Inter-Process Communication (IPC) using pipes. The project was developed as part of the Operating Systems course at ELTE.
+🛠️ Technical Deep Dive
 
-Eljön a Húsvét hétfő, a "Főnyuszi" minden nyuszi fiút (egy gyerek folyamat) a jelentkezettek közül elküld a nyuszi lányokhoz locsolni. A fiúk elmennek a kiszemelt nyuszi családhoz locsolni, ha megérkeznek, jelzést küld a gyerek folyamat erről a "Főnyuszinak", majd sorban elmondják a versikéket, azokat képernyőre írják, amire a nyuszi lányok a locsolásért piros tojásokat adnak a fiúknak. Ha nagyon tetszett a vers akkor többet, ha nem, kevesebbet. Egy nyuszi fiú 1 és 20 között kap tojásokat a tetszés index függvényében (véletlenszám). Ezt is képernyőre írja a gyerek folyamat, és visszaküldi csővezetéken a kapott tojások számát a Főnyuszinak, majd befejezik a locsolást. Főnyuszi a csövön kapott értékeket rögzíti az adatok között. Egyúttal a legtöbb tojást gyűjtő fiút, "Húsvéti Locsolókirály"-nak kikiáltja, majd képernyőre írja a nevét és a kapott tojások számát.
+The application models a competition where a "Master Bunny" (parent process) coordinates several "Rabbit" contestants (child processes) through a complex lifecycle:
 
-Készítsen C nyelvű programot ami  ezt a feladatot megoldja, a megoldásnak vagy az opsys.inf.elte.hu kiszolgálón, vagy egy hozzá hasonló Linux rendszeren kell futnia. A megoldást a beadási határidőt követő héten be kell mutatni a gyakorlatvezetőnek.
+    Process Architecture: Utilizes fork() to create concurrent child processes for each contestant, ensuring parallel task execution.
+
+    Inter-Process Communication (IPC): Implements anonymous pipes to stream data (randomly generated scores) from child processes back to the parent for aggregation.
+
+    Robust Data Parsing: Features a custom-built parser using strtok to handle file I/O from a pipe-delimited (|) text database (nyuszik.txt).
+
+    System Resource Management: Ensures clean execution by managing file descriptors (close) and synchronizing process termination using waitpid to prevent zombie processes.
+
+🚀 How to Run
+
+    Compile the source code using gcc:
+    Bash
+
+    gcc -o bunny_sim main.c
+
+    Execute the binary:
+    Bash
+
+    ./bunny_sim
+
+📂 Project Structure
+
+    main.c: The core logic including the CLI menu, file operations, and the simulation loop.
+
+    nyuszik.txt: A persistent text-based database storing participant names, poems, and scores.
+
+    storage.php / data.php (for the previous project): Demonstrates architectural consistency across different languages.
